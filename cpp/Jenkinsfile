@@ -1,6 +1,6 @@
 def DOCKER_IMAGE_BRANCH = "0.0.1"
 def GIT_COMMIT_HASH = ""
-def DOCKERFILE_NAME = "Dockerfile.OTUS"
+def DOCKERFILE_NAME = "cpp/Dockerfile.OTUS"
 
 pipeline {
     agent any

@@ -12,7 +12,7 @@ pipeline {
     stages{
         stage("Prepare build image") {
             steps {
-                sh "docker build -f ${DOCKERFILE_NAME} . -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_BRANCH}"
+                sh "docker build -f ${DOCKERFILE_NAME} . -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
             }
         }
     }

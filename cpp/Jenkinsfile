@@ -1,9 +1,13 @@
-def DOCKER_IMAGE_BRANCH = "0.0.1"
-def GIT_COMMIT_HASH = ""
-def DOCKERFILE_NAME = "cpp/Dockerfile.OTUS"
+properties([
+        parameters([
+        string(name: 'DOCKER_IMAGE_BRANCH', defaultValue: '0.0.1', description: 'Enter tag for image'),
+        string(name: 'DOCKERFILE_NAME', defaultValue: 'cpp/Dockerfile.OTUS', description: 'Enter path for Dockerfile  for image')
+    ])
+])
 
 pipeline {
     agent any
+
     stages{
         stage("Prepare build image") {
             steps {

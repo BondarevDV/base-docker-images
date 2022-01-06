@@ -1,6 +1,7 @@
 properties([
         parameters([
-        string(name: 'DOCKER_IMAGE_BRANCH', defaultValue: '0.0.1', description: 'Enter tag for image'),
+        string(name: 'DOCKER_IMAGE_TAG', defaultValue: '0.0.1', description: 'Enter tag for image'),
+        string(name: 'DOCKER_IMAGE_NAME', defaultValue: '0.0.1', description: 'Enter name for image'),
         string(name: 'DOCKERFILE_NAME', defaultValue: 'cpp/Dockerfile.OTUS', description: 'Enter path for Dockerfile  for image')
     ])
 ])
@@ -11,7 +12,7 @@ pipeline {
     stages{
         stage("Prepare build image") {
             steps {
-                sh "docker build -f ${DOCKERFILE_NAME} . -t project-build:${DOCKER_IMAGE_BRANCH}"
+                sh "docker build -f ${DOCKERFILE_NAME} . -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_BRANCH}"
             }
         }
     }

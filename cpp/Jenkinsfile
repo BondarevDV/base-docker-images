@@ -35,6 +35,7 @@ pipeline {
                             docker logout ${NEXUS_DOCKER_REGISTRY}
                             '''
                 }
+        }
     }
 }
 

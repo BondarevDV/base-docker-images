@@ -9,7 +9,7 @@ properties([
     ])
 ])
 
-def IMAGE =  "${NEXUS_DOCKER_REGISTRY}/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+def IMAGE =  "${NEXUS_DOCKER_REGISTRY}/repository/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 
 pipeline {
     agent any

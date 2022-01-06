@@ -16,11 +16,10 @@ pipeline {
     stages{
         stage("Prepare build image") {
             steps {
+                echo "${IMAGE}"
                 sh "docker build -f ${DOCKERFILE_NAME} . -t ${IMAGE}"
             }
         }
-    }
-    stages{
         stage("Deploy image to NEXUS") {
             steps {
                 sh "docker push ${IMAGE}"

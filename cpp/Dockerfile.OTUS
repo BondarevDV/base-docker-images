@@ -6,17 +6,10 @@ LABEL description="Container for C++ build"
 
 # install build dependencies 
 RUN apt-get update
-RUN apt-get install -y build-essential apt-utils cmake  libboost-test-dev libspdlog-dev && \
-    apt-get install -y curl vim wget
+RUN apt-get install -y rsync zip openssh-server  && \ 
+    apt-get install -y build-essential apt-utils cmake  libboost-test-dev libspdlog-dev && \
+    apt-get install -y byobu curl git htop man unzip vim wget
 
-
-
-
-# Скопируем директорию /src в контейнер
-ADD ./src /app/src
-
-# Установим рабочую директорию для сборки проекта
-WORKDIR /app/build
 
 
 

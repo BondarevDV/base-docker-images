@@ -2,9 +2,13 @@ properties([
         parameters([
         string(name: 'DOCKER_IMAGE_TAG', defaultValue: '0.0.1', description: 'Enter tag for image'),
         string(name: 'DOCKER_IMAGE_NAME', defaultValue: 'cpp-build', description: 'Enter name for image'),
+        string(name: 'NEXUS_DOCKER_REGISTRY', defaultValue: '192.168.1.13:5000', description: 'Enter nexus docker registry'),
+        string(name: 'NAME_REPO', defaultValue: 'base', description: 'Enter nexus docker registry'),
         string(name: 'DOCKERFILE_NAME', defaultValue: 'cpp/Dockerfile.OTUS', description: 'Enter path for Dockerfile  for image')
     ])
 ])
+
+def IMAGE =  "${NEXUS_DOCKER_REGISTRY}/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 
 pipeline {
     agent any
@@ -12,7 +16,14 @@ pipeline {
     stages{
         stage("Prepare build image") {
             steps {
-                sh "docker build -f ${DOCKERFILE_NAME} . -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                sh "docker build -f ${DOCKERFILE_NAME} . -t ${IMAGE}"
+            }
+        }
+    }
+    stages{
+        stage("Deploy image to NEXUS") {
+            steps {
+                sh "docker push ${IMAGE}"
             }
         }
     }

@@ -4,7 +4,8 @@ properties([
         string(name: 'DOCKER_IMAGE_NAME', defaultValue: 'cpp-build', description: 'Enter name for image'),
         string(name: 'NEXUS_DOCKER_REGISTRY', defaultValue: '192.168.1.13:5000', description: 'Enter nexus docker registry'),
         string(name: 'NAME_REPO', defaultValue: 'base', description: 'Enter nexus docker registry'),
-        string(name: 'DOCKERFILE_NAME', defaultValue: 'cpp/Dockerfile.OTUS', description: 'Enter path for Dockerfile  for image')
+        string(name: 'DOCKERFILE_NAME', defaultValue: 'cpp/Dockerfile.OTUS', description: 'Enter path for Dockerfile  for image'),
+
     ])
 ])
 
@@ -12,6 +13,10 @@ def IMAGE =  "${NEXUS_DOCKER_REGISTRY}/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKE
 
 pipeline {
     agent any
+    // environment {
+    //     IMAGE =  "${NEXUS_DOCKER_REGISTRY}/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+    //     DEPLOY_KEY = credentials('deployKey')
+    // }
 
     stages{
         stage("Prepare build image") {
@@ -22,7 +27,7 @@ pipeline {
         }
         stage ('Deploy image to NEXUS') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'private-artifactory', passwordVariable: 'dockerKey', usernameVariable: 'dockerUser')]) {
+                withCredentials([usernamePassword(credentialsId: 'NEXUS-deploy', passwordVariable: 'dockerKey', usernameVariable: 'dockerUser')]) {
                         sh label: 'Login to docker registry', 
                            script: '''docker login --username ${dockerUser} --password ${dockerKey} ${NEXUS_DOCKER_REGISTRY}'''
                         sh label: 'Logout from docker registry', 

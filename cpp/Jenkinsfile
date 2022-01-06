@@ -1,0 +1,15 @@
+def DOCKER_IMAGE_BRANCH = "0.0.1"
+def GIT_COMMIT_HASH = ""
+def DOCKERFILE_NAME = "Dockerfile.OTUS"
+
+pipeline {
+    agent any
+    stages{
+        stage("Prepare build image") {
+            steps {
+                sh "docker build -f ${DOCKERFILE_NAME} . -t project-build:${DOCKER_IMAGE_BRANCH}"
+            }
+        }
+    }
+}
+

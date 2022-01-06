@@ -1,7 +1,7 @@
 properties([
         parameters([
         string(name: 'DOCKER_IMAGE_TAG', defaultValue: '0.0.1', description: 'Enter tag for image'),
-        string(name: 'DOCKER_IMAGE_NAME', defaultValue: '0.0.1', description: 'Enter name for image'),
+        string(name: 'DOCKER_IMAGE_NAME', defaultValue: 'cpp-build', description: 'Enter name for image'),
         string(name: 'DOCKERFILE_NAME', defaultValue: 'cpp/Dockerfile.OTUS', description: 'Enter path for Dockerfile  for image')
     ])
 ])

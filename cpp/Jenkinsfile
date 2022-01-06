@@ -13,11 +13,6 @@ def IMAGE =  "${NEXUS_DOCKER_REGISTRY}/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKE
 
 pipeline {
     agent any
-    // environment {
-    //     IMAGE =  "${NEXUS_DOCKER_REGISTRY}/${NAME_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-    //     DEPLOY_KEY = credentials('deployKey')
-    // }
-
     stages{
         stage("Prepare build image") {
             steps {
@@ -29,13 +24,11 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'NEXUS-deploy', passwordVariable: 'dockerKey', usernameVariable: 'dockerUser')]) {
                         sh label: 'Login to docker registry', 
-                           script: '''docker login --username ${dockerUser} --password ${dockerKey} ${NEXUS_DOCKER_REGISTRY}'''
-                         sh label: 'Logout from docker registry', 
-                           script: '''
-                            docker push ${IMAGE}
-                            '''
+                            script: '''docker login --username ${dockerUser} --password ${dockerKey} ${NEXUS_DOCKER_REGISTRY}'''
                         sh label: 'Logout from docker registry', 
-                           script: '''
+                            script: "docker push  ${IMAGE}"
+                        sh label: 'Logout from docker registry', 
+                            script: '''
                             docker logout ${NEXUS_DOCKER_REGISTRY}
                             '''
                 }

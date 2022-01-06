@@ -30,6 +30,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'NEXUS-deploy', passwordVariable: 'dockerKey', usernameVariable: 'dockerUser')]) {
                         sh label: 'Login to docker registry', 
                            script: '''docker login --username ${dockerUser} --password ${dockerKey} ${NEXUS_DOCKER_REGISTRY}'''
+                         sh label: 'Logout from docker registry', 
+                           script: '''
+                            docker push ${IMAGE}
+                            '''
                         sh label: 'Logout from docker registry', 
                            script: '''
                             docker logout ${NEXUS_DOCKER_REGISTRY}
